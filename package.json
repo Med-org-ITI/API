@@ -4,8 +4,9 @@
 	"description": "an api for medicine e-commerce website",
 	"main": "app",
 	"scripts": {
-		"start": "node app.js",
-		"dev": "nodemon app.js"
+		"start": "node .",
+		"dev": "nodemon .",
+		"debug": "nodemon --inspect ."
 	},
 	"repository": {
 		"type": "git",
