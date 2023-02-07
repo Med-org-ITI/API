@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { default: slugify } = require("slugify");
 const ApiError = require("../utlis/apiError");
-const User = require("../modles/userModel");
+const User = require("../models/userModel");
 
 // @des Create user
 // @route POST /api/iti/users
