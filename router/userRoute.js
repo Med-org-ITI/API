@@ -6,7 +6,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
-} = require("../services/userService");
+} = require("../controller/userService");
 const {
   getUserValidator,
   createUserValidator,
