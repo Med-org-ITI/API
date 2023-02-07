@@ -1,21 +1,37 @@
-const Mongoose = require("mongoose");
-// 1- Create Schema
-const userShema = new Mongoose.Schema(
-  {
-    name: {
-      type: String,
-      trim: true,
-      minLength: [3, "name must be more than 3 chracter"],
-      maxLength: [32, "name must be less than 32 chracter"],
-    },
-    // A and b => shopping.com/a-and-b
-    slug: {
-      type: String,
-      lowercase: true,
-    },
-  },
-  { timestamps: true }
-);
+const mongoose = require('mongoose');
 
-// 2- Create Model
-module.exports = Mongoose.model("user", userShema);
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: [true, 'name required'],
+        trim: true
+    },
+    email: {
+        type: String,
+        required: [true, 'email required'],
+        unique: true,
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: [true, 'password required'],
+        minlength: [8, 'password must be at least 8 characters'],
+
+    },
+    address: {
+        type: String,
+    },
+    image: {
+        type: String,
+    },
+    gender: {
+        type: String,
+        enum: ["male", "female"]
+    }
+
+
+}, {timestamps: true});
+
+const userModel = mongoose.model('users', userSchema);
+
+module.exports = userModel;
