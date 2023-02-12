@@ -48,24 +48,3 @@ exports.login = async (req, res, next) =>{
         res.status(500).json(err.message);
     }
 };
-
-exports.updateUser = async (req, res, next) => {
-  try{
-
-    const { id } = req.params;
-    const { username, email, password, address, profileImage} = req.body;
-    const user = await User.findByIdAndUpdate(
-      // { _id: id },
-      id,
-    //   { username, slug: slugify(username) },
-      {username, email, password, address, profileImage},
-      // { new: true }
-    );
-    if (!user) {
-      return (new ApiError(`No user for this id ${id}`, 404));
-    }
-    res.status(200).json( "updated");
-  } catch(err){
-    next(err);
-  }
-};
