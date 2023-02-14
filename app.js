@@ -15,13 +15,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/users').then(_ =>{
 	console.log('database connect successfully');
 });
 
-app.use(express.json()); // body parse --> req.body
 app.use(authRoutes);
 
 
 const port = process.env.PORT || 3000;
 
 app.use((err, req, res, next) => {
+	// console.log(err.message);
     if(!err.statusCode){
         err.message = "Something Went Wrong";
     }

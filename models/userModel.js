@@ -32,23 +32,4 @@ const userSchema = new mongoose.Schema({
 
 }, {timestamps: true});
 
-const setImageURL = (doc) =>{
-    if(doc.profileImage){
-        const profileImageUrl = `${process.env.BASE_URL}/users/${doc.profileImage}`;
-        doc.profileImage = profileImageUrl;
-    }
-};
-
-// Get All Users, Get One User, Update 
-userSchema.post('init', (doc) =>{
-    setImageURL(doc);
-});
-
-// Create (in response NOT in database)
-userSchema.post('save', (doc) =>{
-    setImageURL(doc);
-});
-
-const userModel = mongoose.model('users', userSchema);
-
-module.exports = userModel;
+module.exports =  mongoose.model('users', userSchema);;
