@@ -1,4 +1,4 @@
-const Cart = require("../models/cart");
+const Cart = require('../models/cartModel');
 
 // IMPORTANT  check if the cart belongs to the user who is sending the request
 exports.addToCart = async (req, res) => {
@@ -50,7 +50,7 @@ exports.clearCart = async (req, res) => {
     cart.items = [];
     cart.total = 0;
     await cart.save();
-    res.status(200).json("cart cleared");
+    res.status(200).json('cart cleared');
   } catch (err) {
     res.status(500).json(err);
   }
