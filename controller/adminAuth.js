@@ -1,5 +1,5 @@
-const bcrypt = require("bcrypt");
-const Admin = require("../models/admin");
+const bcrypt = require('bcrypt');
+const Admin = require('../models/adminModel');
 
 exports.login = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ exports.login = async (req, res) => {
       req.session.isLoggedIn = true;
       req.session.user = admin;
       await req.session.save();
-      res.json("session created");
+      res.json('session created');
     }
   } catch (err) {
     res.status(500).json(err);
@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
   try {
     await req.session.destroy();
-    res.json("end session");
+    res.json('end session');
   } catch (err) {
     res.status(500).json(err);
   }

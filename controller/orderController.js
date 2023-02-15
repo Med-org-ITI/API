@@ -1,10 +1,10 @@
-const Cart = require("../models/cart");
-const Order = require("../models/order");
+const Cart = require('../models/cartModel');
+const Order = require('../models/orderModel');
 
 exports.allOrders = async (req, res) => {
   try {
     const orders = await Order.find();
-    res.status(200).json({ message: "all orders", orders });
+    res.status(200).json({ message: 'all orders', orders });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -13,7 +13,7 @@ exports.allOrders = async (req, res) => {
 exports.getOrder = async (req, res) => {
   try {
     const order = await Order.findById(req.params.orderId);
-    res.status(200).json({ message: "got the order", order });
+    res.status(200).json({ message: 'got the order', order });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -22,10 +22,10 @@ exports.getOrder = async (req, res) => {
 exports.userOrders = async (req, res) => {
   try {
     if (res.locals.userId !== req.params.id) {
-      console.log("test");
+      console.log('test');
     }
     const orders = await Order.find({ userId: req.params.id });
-    res.status(200).json({ message: "got user orders", orders });
+    res.status(200).json({ message: 'got user orders', orders });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -34,13 +34,13 @@ exports.userOrders = async (req, res) => {
 exports.userCompletedOrders = async (req, res) => {
   try {
     if (res.locals.userId !== req.params.id) {
-      console.log("test");
+      console.log('test');
     }
     const orders = await Order.find({
-      status: "completed",
+      status: 'completed',
       userId: req.params.id,
     });
-    res.status(200).json({ message: "got user orders", orders });
+    res.status(200).json({ message: 'got user orders', orders });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -58,7 +58,7 @@ exports.createOrder = async (req, res) => {
     cart.total = 0;
     await cart.save();
     await order.save();
-    res.status(201).json("order created");
+    res.status(201).json('order created');
   } catch (err) {
     res.status(500).json(err);
   }
