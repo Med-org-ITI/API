@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const ConnectMongoDBSession = require('connect-mongodb-session')(session);
@@ -11,19 +12,24 @@ const orderRouter = require('./router/orderRoute');
 const adminRouter = require('./router/adminRoute');
 const adminAuthRouter = require('./router/adminAuth');
 const isAdmin = require('./middlewares/admin-auth');
+const authRoutes = require('./router/authRoute');
 
 require('dotenv').config();
 
 const dbconnection = require('./config/database');
 const userRoute = require('./router/userRoute');
 const globalError = require('./middlewares/errorMiddleware');
-const ApiError = require('./utlis/apiError');
+const ApiError = require('./utils/apiError');
 // Connect with DB.
 dbconnection();
 
 // express app
 const app = express();
 app.use(express.json());
+
+// upload image
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 const sessionStore = new ConnectMongoDBSession({
   uri: process.env.MONGODB_URI,
@@ -57,7 +63,7 @@ app.use('/admin', isAdmin, adminRouter);
 app.use('/api/iti/items', itemRouter);
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
-app.use(authRouter);
+app.use(authRoutes);
 
 app.all('*', (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));

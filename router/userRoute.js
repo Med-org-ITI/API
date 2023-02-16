@@ -12,7 +12,7 @@ const {
   createUserValidator,
   updateUserValidator,
   deleteUserValidator,
-} = require('../utlis/validators/userValidator');
+} = require('../utils/validators/userValidator');
 
 const router = express.Router();
 const itemRoute = require('./itemRoute');
