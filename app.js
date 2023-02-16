@@ -1,18 +1,10 @@
 const path = require('path');
 const express = require('express');
-const session = require('express-session');
-const ConnectMongoDBSession = require('connect-mongodb-session')(session);
 
 const morgan = require('morgan');
-const authRouter = require('./router/authRoute');
 const itemRouter = require('./router/itemRoute');
 const cartRouter = require('./router/cartRoute');
 const orderRouter = require('./router/orderRoute');
-
-const adminRouter = require('./router/adminRoute');
-const adminAuthRouter = require('./router/adminAuth');
-const isAdmin = require('./middlewares/admin-auth');
-const authRoutes = require('./router/authRoute');
 
 require('dotenv').config();
 
@@ -31,21 +23,6 @@ app.use(express.json());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
 
-const sessionStore = new ConnectMongoDBSession({
-  uri: process.env.MONGODB_URI,
-  collection: 'session',
-});
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: { maxAge: 2 * 60 * 60 * 1000 },
-  })
-);
-
 // Middlewares
 app.use(express.json());
 
@@ -58,12 +35,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount Routers
 app.use('/api/iti/users', userRoute);
-app.use('/admin', adminAuthRouter);
-app.use('/admin', isAdmin, adminRouter);
 app.use('/api/iti/items', itemRouter);
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
-app.use(authRoutes);
 
 app.all('*', (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
