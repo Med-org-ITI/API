@@ -40,6 +40,7 @@ const userShema = new Mongoose.Schema(
     gender: {
       type: String,
     },
+    image: String,
     active: {
       type: Boolean,
       default: true,
@@ -52,6 +53,24 @@ const userShema = new Mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const setImageUrl = (doc) => {
+  if (doc.image) {
+    const imageUrl = `${process.env.BASE_URL}/users/${doc.image}`;
+    doc.image = imageUrl;
+    console.log(process.env.BASE_URL);
+  }
+};
+
+// findOne, findAll and update
+userShema.post('init', (doc) => {
+  setImageUrl(doc);
+});
+
+// create
+userShema.post('save', (doc) => {
+  setImageUrl(doc);
+});
 
 // 2- Create Model
 module.exports = Mongoose.model('user', userShema);

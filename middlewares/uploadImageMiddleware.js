@@ -1,23 +1,30 @@
 const multer = require('multer');
-const { v4: uuidv4 } = require('uuid');
 const ApiError = require('../utils/apiError');
 
 const multerOptions = () => {
-  const multerStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/users');
-    },
-    filename: function (req, file, cb) {
-      const filename = `user-${uuidv4()}-${Date.now()}.${file.originalname}`;
-      cb(null, filename); //null --> means that not found error
-    },
-  });
+  // 1) DiskStorage engine
+  // const multerStorage = multer.diskStorage({
+  //   destination: function (req, filr, cb) {
+  //     cb(null, 'uploads/users');
+  //   },
 
-  const multerFilter = function (req, file, cb) {
+  //   filename: function (req, file, cb) {
+  //     // category-${id}-Date.now()-ext
+  //     const ext = file.mimetype.split('/')[1];
+  //     const filename = `category-${uuidv4()}-${Date.now()}.${ext}`;
+  //     cb(null, filename);
+  //   },
+  // });
+
+  // 2) MemoryStorage engine
+
+  const multerStorage = multer.memoryStorage();
+
+  const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image')) {
       cb(null, true);
     } else {
-      cb(new ApiError('Only Images allowed', 400), false); // false if exist error (failed)
+      cb(new ApiError('Only Images allowed', 400), false);
     }
   };
 
@@ -25,7 +32,7 @@ const multerOptions = () => {
   return upload;
 };
 
-exports.uploadSingleImage = (image) => multerOptions().single(image);
+exports.uploadSingleImage = (fieldName) => multerOptions().single(fieldName);
 
-exports.uploadMixesImages = (arrayOfImages) =>
-  multerOptions().fields(arrayOfImages);
+exports.uploadMixOfImages = (arrayOfOields) =>
+  multerOptions().fields(arrayOfOields);

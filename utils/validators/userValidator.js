@@ -8,6 +8,7 @@ exports.getUserValidator = [
   validatorMiddleware,
 ];
 
+// continue from user model
 exports.createUserValidator = [
   check('name')
     .notEmpty()

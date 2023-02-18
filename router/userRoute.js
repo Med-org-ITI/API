@@ -6,6 +6,8 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  resizeImage,
+  uploadUsreImage,
 } = require('../controller/userController');
 const {
   getUserValidator,
@@ -19,11 +21,14 @@ const itemRoute = require('./itemRoute');
 
 router.use('/:userId/items', itemRoute);
 
-router.route('/').get(getUsers).post(createUserValidator, createUser);
+router
+  .route('/')
+  .get(getUsers)
+  .post(uploadUsreImage, resizeImage, createUserValidator, createUser);
 router
   .route('/:id')
   .get(getUserValidator, getUser)
-  .put(updateUserValidator, updateUser)
+  .put(uploadUsreImage, resizeImage, updateUserValidator, updateUser)
   .delete(deleteUserValidator, deleteUser);
 
 module.exports = router;

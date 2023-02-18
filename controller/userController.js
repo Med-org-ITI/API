@@ -1,5 +1,30 @@
+const sharp = require('sharp');
+const { v4: uuidv4 } = require('uuid');
+const asyncHandler = require('express-async-handler');
+
 const User = require('../models/userModel');
 const factory = require('./handlerFactory');
+
+const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
+
+exports.uploadUsreImage = uploadSingleImage('image');
+
+// Image processing
+exports.resizeImage = asyncHandler(async (req, file, next) => {
+  const filename = `user-${uuidv4()}-${Date.now()}.jpeg`;
+
+  if (req.file) {
+    await sharp(req.file.buffer)
+      .resize(600, 600)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`uploads/users/${filename}`);
+  }
+
+  // save image into our db
+  req.body.image = filename;
+  next();
+});
 
 // @des Create user
 // @route POST /api/iti/users
