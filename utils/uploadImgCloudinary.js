@@ -13,7 +13,6 @@ exports.uploadImage = async (file, folder) => {
     const result = await cloudinary.uploader.upload(file, { folder });
     return { url: result.url };
   } catch (err) {
-    // eslint-disable-next-line no-new
-    new ApiError('failed to upload to cloudinary', 500);
+    return new ApiError('failed to upload to cloudinary', 500);
   }
 };

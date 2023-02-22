@@ -17,18 +17,44 @@ const {
   deleteItemValidator,
 } = require('../utils/validators/itemValidator');
 
+const authService = require('../controller/authController');
+
 // mergeParms: Allow us to access parameteres on other routers
 const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
   .get(createFilterObj, getItems)
-  .post(uploadItemImage, resizeImage, createItemValidator, createItem);
+  .post(
+    authService.protect,
+    authService.allowedTo('admin', 'manager'),
+    uploadItemImage,
+    resizeImage,
+    createItemValidator,
+    createItem
+  );
 
 router
   .route('/:id')
-  .get(getItemValidator, getItem)
-  .put(uploadItemImage, resizeImage, updateItemValidator, updateItem)
-  .delete(deleteItemValidator, deleteItem);
+  .get(
+    authService.protect,
+    authService.allowedTo('admin', 'manager'),
+    getItemValidator,
+    getItem
+  )
+  .put(
+    authService.protect,
+    authService.allowedTo('admin', 'manager'),
+    uploadItemImage,
+    resizeImage,
+    updateItemValidator,
+    updateItem
+  )
+  .delete(
+    authService.protect,
+    authService.allowedTo('admin'),
+    deleteItemValidator,
+    deleteItem
+  );
 
 module.exports = router;

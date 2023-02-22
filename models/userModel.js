@@ -1,13 +1,12 @@
-// const { number } = require('joi');
 const Mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 // 1- Create Schema
-const userShema = new Mongoose.Schema(
+const userSchema = new Mongoose.Schema(
   {
     name: {
       type: String,
       trim: true,
       required: [true, 'name is required'],
-      unique: true,
       minLength: [3, 'name must be more than 3 chracter'],
       maxLength: [32, 'name must be less than 32 chracter'],
     },
@@ -28,10 +27,14 @@ const userShema = new Mongoose.Schema(
       type: String,
       required: true,
       minLength: [6, 'Too short password'],
+      passwordChangedAt: Date,
+      passwordResetCode: String,
+      passwordResetExpires: Date,
+      passwordResetVerified: Boolean,
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
+      enum: ['user', 'admin', 'manager'],
       default: 'user',
     },
     address: {
@@ -40,7 +43,7 @@ const userShema = new Mongoose.Schema(
     gender: {
       type: String,
     },
-    image: String,
+    profileImage: String,
     active: {
       type: Boolean,
       default: true,
@@ -54,23 +57,12 @@ const userShema = new Mongoose.Schema(
   { timestamps: true }
 );
 
-const setImageUrl = (doc) => {
-  if (doc.image) {
-    const imageUrl = `${process.env.BASE_URL}/users/${doc.image}`;
-    doc.image = imageUrl;
-    console.log(process.env.BASE_URL);
-  }
-};
-
-// findOne, findAll and update
-userShema.post('init', (doc) => {
-  setImageUrl(doc);
-});
-
-// create
-userShema.post('save', (doc) => {
-  setImageUrl(doc);
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  // Hashing user password
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
 });
 
 // 2- Create Model
-module.exports = Mongoose.model('user', userShema);
+module.exports = Mongoose.model('user', userSchema);

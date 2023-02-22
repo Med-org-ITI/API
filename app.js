@@ -3,11 +3,14 @@ const express = require('express');
 const morgan = require('morgan');
 require('dotenv').config();
 
-const dbconnection = require('./config/database');
-const userRoute = require('./router/userRoute');
-const itemRouter = require('./router/itemRoute');
-const globalError = require('./middlewares/errorMiddleware');
 const ApiError = require('./utils/apiError');
+const globalError = require('./middlewares/errorMiddleware');
+
+const dbconnection = require('./config/database');
+// Routes
+const itemRouter = require('./router/itemRoute');
+const userRoute = require('./router/userRoute');
+const authRoute = require('./router/authRoute');
 
 // Connect with DB.
 dbconnection();
@@ -31,8 +34,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Mount Routers
-app.use('/api/iti/users', userRoute);
-app.use('/api/iti/items', itemRouter);
+app.use('/users', userRoute);
+app.use('/items', itemRouter);
+app.use('/auth', authRoute);
 
 app.all('*', (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
