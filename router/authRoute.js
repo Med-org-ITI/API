@@ -1,9 +1,26 @@
-const { Router } = require('express');
-const { login, signup } = require('../controller/authController');
+const express = require('express');
 
-const router = Router();
+const {
+  signupUserValidator,
+  loginUserValidator,
+} = require('../utils/validators/authValidator');
+const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
+const {
+  signup,
+  login,
+  forgotPassword,
+  verifyPassRestCode,
+  resetPassword,
+} = require('../controller/authController');
 
-router.post('/login', login);
-router.post('/signup', signup);
+const router = express.Router();
+
+router
+  .route('/signup')
+  .post(uploadSingleImage('profileImage'), signupUserValidator, signup);
+router.route('/login').post(loginUserValidator, login);
+router.post('/forgotPassword', forgotPassword);
+router.post('/verifyResetCode', verifyPassRestCode);
+router.put('/resetPassword', resetPassword);
 
 module.exports = router;

@@ -1,23 +1,17 @@
+const path = require('path');
 const express = require('express');
-const session = require('express-session');
-const ConnectMongoDBSession = require('connect-mongodb-session')(session);
-
 const morgan = require('morgan');
-const authRouter = require('./router/authRoute');
-const itemRouter = require('./router/itemRoute');
-const cartRouter = require('./router/cartRoute');
-const orderRouter = require('./router/orderRoute');
-
-const adminRouter = require('./router/adminRoute');
-const adminAuthRouter = require('./router/adminAuth');
-const isAdmin = require('./middlewares/admin-auth');
-
 require('dotenv').config();
 
-const dbconnection = require('./config/database');
-const userRoute = require('./router/userRoute');
+const ApiError = require('./utils/apiError');
 const globalError = require('./middlewares/errorMiddleware');
-const ApiError = require('./utlis/apiError');
+
+const dbconnection = require('./config/database');
+// Routes
+const itemRouter = require('./router/itemRoute');
+const userRoute = require('./router/userRoute');
+const authRoute = require('./router/authRoute');
+
 // Connect with DB.
 dbconnection();
 
@@ -25,20 +19,9 @@ dbconnection();
 const app = express();
 app.use(express.json());
 
-const sessionStore = new ConnectMongoDBSession({
-  uri: process.env.MONGODB_URI,
-  collection: 'session',
-});
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: { maxAge: 2 * 60 * 60 * 1000 },
-  })
-);
+// upload image
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 // Middlewares
 app.use(express.json());
@@ -51,13 +34,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Mount Routers
-app.use('/api/iti/users', userRoute);
-app.use('/admin', adminAuthRouter);
-app.use('/admin', isAdmin, adminRouter);
-app.use('/api/iti/items', itemRouter);
-app.use('/cart', cartRouter);
-app.use('/order', orderRouter);
-app.use(authRouter);
+app.use('/users', userRoute);
+app.use('/items', itemRouter);
+app.use('/auth', authRoute);
 
 app.all('*', (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
