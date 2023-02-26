@@ -38,6 +38,7 @@ router.put(
 );
 
 router.app.use(itemRoute);
+
 router.use(authService.protect);
 
 router.get('/getMe', getLoggedUserData, getUser);
