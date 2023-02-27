@@ -14,7 +14,7 @@ exports.getOrder = asyncHandler(async (req, res) => {
 });
 
 // HERE  User
-exports.userOrders = asyncHandler(async (req, res) => {
+exports.userOrders = asyncHandler(async (req, res, next) => {
 	if (req.user._id !== req.params.id) {
 		return next(new ApiError(401, 'You are not allowed to get this information'));
 	}
@@ -22,7 +22,7 @@ exports.userOrders = asyncHandler(async (req, res) => {
 	res.status(200).json({ message: 'got user orders', orders });
 });
 
-exports.userCompletedOrders = asyncHandler(async (req, res) => {
+exports.userCompletedOrders = asyncHandler(async (req, res, next) => {
 	if (req.user._id !== req.params.id) {
 		return next(new ApiError(401, 'You are not allowed to get this information'));
 	}

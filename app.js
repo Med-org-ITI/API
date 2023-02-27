@@ -24,20 +24,20 @@ app.use(express.json());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
 
-const sessionStore = new ConnectMongoDBSession({
-	uri: process.env.MONGODB_URI,
-	collection: 'session',
-});
+// const sessionStore = new ConnectMongoDBSession({
+// 	uri: process.env.MONGODB_URI,
+// 	collection: 'session',
+// });
 
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: false,
-		store: sessionStore,
-		cookie: { maxAge: 2 * 60 * 60 * 1000 },
-	})
-);
+// app.use(
+// 	session({
+// 		secret: process.env.SESSION_SECRET,
+// 		resave: false,
+// 		saveUninitialized: false,
+// 		store: sessionStore,
+// 		cookie: { maxAge: 2 * 60 * 60 * 1000 },
+// 	})
+// );
 
 // Middlewares
 

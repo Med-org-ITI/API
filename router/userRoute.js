@@ -32,7 +32,7 @@ const itemRoute = require('./itemRoute');
 router.use('/:userId/items', itemRoute);
 
 router.put('/changePassword/:id', changeUserPasswordValidator, changeUserPassword);
-router.app.use(itemRoute);
+router.use(itemRoute);
 router.use(authService.protect);
 
 router.get('/getMe', getLoggedUserData, getUser);
