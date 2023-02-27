@@ -12,7 +12,7 @@ const generateToken = require('../utils/generateToken');
 // @des signup
 // @route GET /auth/signup
 // @access Public
-exports.signup = asyncHandler(async (req, res, next) => {
+exports.signup = asyncHandler(async (req, res) => {
   // 1) Create user
 
   // upload image (Cloudinary)
@@ -233,7 +233,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
   await user.save();
 
-  // 3) if everything is ok, generat token
+  // 3) if everything is ok, generate token
 
   const token = generateToken(user._id);
   res.status(200).json({ token });
