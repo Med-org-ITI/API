@@ -11,14 +11,14 @@ const dbconnection = require('./config/database');
 const itemRouter = require('./router/itemRoute');
 const userRoute = require('./router/userRoute');
 const authRoute = require('./router/authRoute');
-
+const cartRoute = require('./router/cartRoute');
+const orderRoute = require('./router/orderRoute');
 // Connect with DB.
 dbconnection();
 
 // express app
 const app = express();
 app.use(express.json());
-
 
 // upload image
 app.use(express.json());
@@ -39,9 +39,7 @@ app.use(
 	})
 );
 
-
 // Middlewares
-
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
@@ -54,6 +52,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/users', userRoute);
 app.use('/items', itemRouter);
 app.use('/auth', authRoute);
+app.use('/cart', cartRoute);
+app.use('/orders', orderRoute);
 
 app.all('*', (req, res, next) => {
 	next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
