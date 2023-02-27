@@ -1,4 +1,5 @@
 const path = require('path');
+const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 require('dotenv').config();
@@ -19,9 +20,9 @@ dbconnection();
 // express app
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // upload image
-app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 // const sessionStore = new ConnectMongoDBSession({
