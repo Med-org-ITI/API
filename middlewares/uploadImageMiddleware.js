@@ -4,16 +4,7 @@ const ApiError = require('../utils/apiError');
 const multerOptions = () => {
 	//nMemoryStorage engine
 
-	// const multerStorage = multer.memoryStorage();
-	const fileStorage = multer.diskStorage({
-		destination: (req, file, cb) => {
-			cb(null, 'uploads/profile');
-		},
-		filename: (req, file, cb) => {
-			cb(null, `${Date.now()} - ${file.originalname}`);
-		},
-	});
-
+	const multerStorage = multer.memoryStorage();
 	const multerFilter = (req, file, cb) => {
 		if (file.mimetype.startsWith('image')) {
 			cb(null, true);
@@ -22,7 +13,7 @@ const multerOptions = () => {
 		}
 	};
 	const upload = multer({
-		storage: fileStorage,
+		storage: multerStorage,
 		fileFilter: multerFilter,
 	});
 	return upload;

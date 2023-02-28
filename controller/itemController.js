@@ -1,12 +1,13 @@
 const sharp = require('sharp');
-const fs = require('fs/promises');
 const { v4: uuidv4 } = require('uuid');
 const asyncHandler = require('express-async-handler');
+const { join } = require('path');
 
 const Item = require('../models/itemModel');
 const factory = require('./handlerFactory');
 
 const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
+const { uploadImage } = require('../utils/uploadImgCloudinary');
 
 exports.uploadItemImage = uploadSingleImage('image');
 
@@ -14,16 +15,16 @@ exports.uploadItemImage = uploadSingleImage('image');
 exports.resizeImage = asyncHandler(async (req, file, next) => {
 	const filename = `item-${uuidv4()}-${Date.now()}.jpeg`;
 	if (req.file) {
-		await sharp(req.file.path)
+		await sharp(req.file.buffer)
 			.resize(600, 600)
 			.toFormat('jpeg')
 			.jpeg({ quality: 90 })
 			.toFile(`uploads/items/${filename}`);
-		await fs.unlink(req.file.path);
+		uploadImage(`uploads/items/${filename}`, 'items');
 	}
 
 	// save image into our db
-	req.body.image = `${process.env.BASE_URL}/uploads/items/${filename}`;
+	req.body.image = filename;
 	next();
 });
 
