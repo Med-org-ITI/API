@@ -20,7 +20,7 @@ exports.signup = asyncHandler(async (req, res) => {
 		email: req.body.email,
 		password: req.body.password,
 		address: req.body.address,
-		// profileImage: result.url,
+		profileImage: req.file ? req.file.path : '',
 	});
 
 	// remove images from folder uploads
