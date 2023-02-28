@@ -1,4 +1,5 @@
 const sharp = require('sharp');
+const fs = require('fs/promises');
 const { v4: uuidv4 } = require('uuid');
 const asyncHandler = require('express-async-handler');
 
@@ -11,34 +12,35 @@ exports.uploadItemImage = uploadSingleImage('image');
 
 // Image processing
 exports.resizeImage = asyncHandler(async (req, file, next) => {
-  const filename = `item-${uuidv4()}-${Date.now()}.jpeg`;
-  if (req.file) {
-    await sharp(req.file.buffer)
-      .resize(600, 600)
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`uploads/items/${filename}`);
-  }
+	const filename = `item-${uuidv4()}-${Date.now()}.jpeg`;
+	if (req.file) {
+		await sharp(req.file.path)
+			.resize(600, 600)
+			.toFormat('jpeg')
+			.jpeg({ quality: 90 })
+			.toFile(`uploads/items/${filename}`);
+		await fs.unlink(req.file.path);
+	}
 
-  // save image into our db
-  req.body.image = filename;
-  next();
+	// save image into our db
+	req.body.image = `${process.env.BASE_URL}/uploads/items/${filename}`;
+	next();
 });
 
 exports.setUserIdToBody = (req, res, next) => {
-  // Nested route
-  if (!req.body.user) req.body.user = req.params.userId;
-  next();
+	// Nested route
+	if (!req.body.user) req.body.user = req.params.userId;
+	next();
 };
 
 // Nested route
 // GET /api/v1/users/:userId/items
 // GET /api/v1/proudcts/:productId/reviews
 exports.createFilterObj = (req, res, next) => {
-  let filterObject = {};
-  if (req.params.userId) filterObject = { userId: req.params.userId };
-  req.filterObj = filterObject;
-  next();
+	let filterObject = {};
+	if (req.params.userId) filterObject = { userId: req.params.userId };
+	req.filterObj = filterObject;
+	next();
 };
 
 // @des Create item
