@@ -42,9 +42,11 @@ router.use(itemRoute);
 router.get('/getMe', getLoggedUserData, getUser);
 router.put(
   '/changeMyPassword',
+  authService.protect,
   updateLoggedUserPasswordValidator,
   updateLoggedUserPassword
 );
+
 router.put(
   '/updateMe',
   uploadUsreImage,
