@@ -1,5 +1,6 @@
 // for git
 const path = require('path');
+const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 require('dotenv').config();
@@ -12,37 +13,35 @@ const dbconnection = require('./config/database');
 const itemRouter = require('./router/itemRoute');
 const userRoute = require('./router/userRoute');
 const authRoute = require('./router/authRoute');
-
+const cartRoute = require('./router/cartRoute');
+const orderRoute = require('./router/orderRoute');
 // Connect with DB.
 dbconnection();
 
 // express app
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 
 // upload image
-app.use(express.json());
 app.use(express.static(path.join(__dirname, 'uploads')));
 
-const sessionStore = new ConnectMongoDBSession({
-	uri: process.env.MONGODB_URI,
-	collection: 'session',
-});
+// const sessionStore = new ConnectMongoDBSession({
+// 	uri: process.env.MONGODB_URI,
+// 	collection: 'session',
+// });
 
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: false,
-		store: sessionStore,
-		cookie: { maxAge: 2 * 60 * 60 * 1000 },
-	})
-);
-
+// app.use(
+// 	session({
+// 		secret: process.env.SESSION_SECRET,
+// 		resave: false,
+// 		saveUninitialized: false,
+// 		store: sessionStore,
+// 		cookie: { maxAge: 2 * 60 * 60 * 1000 },
+// 	})
+// );
 
 // Middlewares
-
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
@@ -55,6 +54,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/users', userRoute);
 app.use('/items', itemRouter);
 app.use('/auth', authRoute);
+app.use('/cart', cartRoute);
+app.use('/orders', orderRoute);
 
 app.all('*', (req, res, next) => {
 	next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));

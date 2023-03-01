@@ -36,17 +36,17 @@ router.put(
   changeUserPasswordValidator,
   changeUserPassword
 );
-
-router.app.use(itemRoute);
-
 router.use(authService.protect);
+router.use(itemRoute);
 
 router.get('/getMe', getLoggedUserData, getUser);
 router.put(
   '/changeMyPassword',
+  authService.protect,
   updateLoggedUserPasswordValidator,
   updateLoggedUserPassword
 );
+
 router.put(
   '/updateMe',
   uploadUsreImage,
