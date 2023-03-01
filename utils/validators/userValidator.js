@@ -1,6 +1,8 @@
+
 const { check, body } = require('express-validator');
 const { default: slugify } = require('slugify');
 const bcrypt = require('bcryptjs');
+
 const validatorMiddleware = require('../../middlewares/validatorMiddleware');
 const User = require('../../models/userModel');
 
@@ -9,7 +11,9 @@ exports.getUserValidator = [
   validatorMiddleware,
 ];
 
+
 // continue from user model
+
 exports.createUserValidator = [
   check('name')
     .notEmpty()
@@ -78,7 +82,9 @@ exports.createUserValidator = [
 ];
 
 exports.updateUserValidator = [
+
   check('id').isMongoId().withMessage('Invalid User id format'),
+
   check('name')
     .optional()
     .isLength({ min: 3 })
@@ -136,6 +142,7 @@ exports.deleteUserValidator = [
   check('id').isMongoId().withMessage('Invalid user Id format'),
   validatorMiddleware,
 ];
+
 
 exports.changeUserPasswordValidator = [
   check('id').isMongoId().withMessage('Invalid User id format'),
@@ -246,3 +253,4 @@ exports.updateLoggedUserDataValidator = [
 
   validatorMiddleware,
 ];
+

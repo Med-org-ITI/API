@@ -6,39 +6,39 @@ const Item = require('../models/itemModel');
 const factory = require('./handlerFactory');
 
 const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
+const { uploadImage } = require('../utils/uploadImgCloudinary');
 
 exports.uploadItemImage = uploadSingleImage('image');
 
 // Image processing
 exports.resizeImage = asyncHandler(async (req, file, next) => {
-  const filename = `item-${uuidv4()}-${Date.now()}.jpeg`;
-  if (req.file) {
-    await sharp(req.file.buffer)
-      .resize(600, 600)
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toFile(`uploads/items/${filename}`);
-  }
+	const filename = `item-${uuidv4()}-${Date.now()}.jpeg`;
+	if (req.file) {
+		await sharp(req.file.buffer)
+			.resize(600, 600)
+			.toFormat('jpeg')
+			.jpeg({ quality: 90 })
+			.toFile(`uploads/items/${filename}`);
+		req.body.image = (await uploadImage(`uploads/items/${filename}`, 'items')).url;
+	}
 
-  // save image into our db
-  req.body.image = filename;
-  next();
+	next();
 });
 
 exports.setUserIdToBody = (req, res, next) => {
-  // Nested route
-  if (!req.body.user) req.body.user = req.params.userId;
-  next();
+	// Nested route
+	if (!req.body.user) req.body.user = req.params.userId;
+	next();
 };
 
 // Nested route
 // GET /api/v1/users/:userId/items
 // GET /api/v1/proudcts/:productId/reviews
 exports.createFilterObj = (req, res, next) => {
-  let filterObject = {};
-  if (req.params.userId) filterObject = { userId: req.params.userId };
-  req.filterObj = filterObject;
-  next();
+	let filterObject = {};
+	if (req.params.userId) filterObject = { userId: req.params.userId };
+	req.filterObj = filterObject;
+	next();
 };
 
 // @des Create item
