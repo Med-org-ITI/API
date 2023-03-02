@@ -36,7 +36,7 @@ router
 
 router
 	.route('/:id')
-	.get(authService.protect, authService.allowedTo('admin', 'manager'), getItemValidator, getItem)
+	.get(authService.protect, getItemValidator, getItem)
 	.put(
 		authService.protect,
 		authService.allowedTo('admin', 'manager'),

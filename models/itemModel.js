@@ -48,9 +48,9 @@ const setImageUrl = doc => {
 };
 
 // findOne, findAll and update
-itemSchema.post('init', doc => {
-	setImageUrl(doc);
-});
+// itemSchema.post('init', doc => {
+// 	setImageUrl(doc);
+// });
 
 // create
 itemSchema.post('save', doc => {

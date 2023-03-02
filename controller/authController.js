@@ -53,6 +53,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 // @des make sure the user is logged in
 exports.protect = asyncHandler(async (req, res, next) => {
 	// 1) Check if token exist, if exist get it
+
 	let token;
 	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
 		token = req.headers.authorization.split(' ')[1];
