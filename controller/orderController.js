@@ -15,11 +15,11 @@ exports.getOrder = asyncHandler(async (req, res) => {
 
 // HERE  User
 exports.userOrders = asyncHandler(async (req, res, next) => {
-	if (req.user._id !== req.params.id) {
-		return next(new ApiError('You are not allowed to get this information', 401));
-	}
-	const orders = await Order.find({ userId: req.params.id });
-	res.status(200).json({ message: 'got user orders', orders });
+	// if (req.user._id !== req.params.id) {
+	// 	return next(new ApiError('You are not allowed to get this information', 401));
+	// }
+	const orders = await Order.find({ userId: req.user._id });
+	res.status(200).json({ message: 'got user orders', data: orders });
 });
 
 exports.userCompletedOrders = asyncHandler(async (req, res, next) => {
