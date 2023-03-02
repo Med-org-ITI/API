@@ -32,10 +32,13 @@ exports.userCompletedOrders = asyncHandler(async (req, res, next) => {
 
 exports.createOrder = asyncHandler(async (req, res) => {
 	const cart = await Cart.findOne({ userId: req.user._id });
-	const order = new Order({ total: cart.total, items: cart.items, userId: cart.userId });
-	cart.items = [];
-	cart.total = 0;
-	await cart.save();
-	await order.save();
-	res.status(201).json('order created');
+	if (cart.items.length > 0) {
+		const order = new Order({ total: cart.total, items: cart.items, userId: cart.userId });
+		cart.items = [];
+		cart.total = 0;
+		await cart.save();
+		await order.save();
+		return res.status(201).json('order created');
+	}
+	res.status(422).json('cart must be filled');
 });

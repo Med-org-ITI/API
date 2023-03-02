@@ -16,7 +16,7 @@ exports.addToCart = asyncHandler(async (req, res) => {
 		cart = await Cart.create({ userId: req.user._id });
 	}
 	cart.total += price * quantity;
-	const itemIndex = cart.items.findIndex(i => i.itemId === itemId);
+	const itemIndex = cart.items.findIndex(i => String(i.itemId) === String(itemId));
 	if (itemIndex > -1) {
 		const existingItem = cart.items[itemIndex];
 		existingItem.quantity += +quantity;
@@ -31,7 +31,7 @@ exports.addToCart = asyncHandler(async (req, res) => {
 exports.removeFromCart = asyncHandler(async (req, res) => {
 	const { itemId, price } = req.body;
 	const cart = await Cart.findOne({ userId: req.user._id });
-	const itemIndex = cart.items.findIndex(i => i.itemId === itemId);
+	const itemIndex = cart.items.findIndex(i => String(i.itemId) === String(itemId));
 	const existingItem = cart.items[itemIndex];
 	cart.total -= price;
 	if (existingItem.quantity > 1) {
