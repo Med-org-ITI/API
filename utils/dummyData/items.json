@@ -1,0 +1,114 @@
+[{
+  "_id": {
+    "$oid": "63ea60a4dcbc813c777efb0a"
+  },
+  "title": "first item",
+  "description": "description first item",
+  "price": 10,
+  "userId": {
+    "$oid": "63e42fd37a185249ecc610e1"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1676304548768"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1676304548768"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63ea61e4dcbc813c777efb0e"
+  },
+  "title": "second item",
+  "description": "description second item",
+  "price": 10,
+  "userId": {
+    "$oid": "63e42fe27a185249ecc610e3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1676304868523"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1676304868523"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63eacf4c88990cbc9adf6b98"
+  },
+  "title": "second item",
+  "description": "description second item",
+  "price": 15,
+  "userId": {
+    "$oid": "63e42fe27a185249ecc610e3"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1676332876063"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1676332876063"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63ead35d9fc7de1a69e209b6"
+  },
+  "title": "tes item",
+  "description": "description test item",
+  "price": 30,
+  "userId": {
+    "$oid": "63e42fee7a185249ecc610e7"
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1676333917573"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1676333917573"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63f075c74b123477fca65ed9"
+  },
+  "title": "pandol extra",
+  "description": "dajskljdklsajdlsjadlkjsadloj asd jlasjdk asjmldjasld jnklsajdl",
+  "price": 14,
+  "expiryDate": {
+    "$date": {
+      "$numberLong": "1714687200000"
+    }
+  },
+  "quantity": 1,
+  "userId": {
+    "$oid": "63ec7d07655c7627fba3cdec"
+  },
+  "image": "item-f63773be-b631-464c-9f43-e46c72f96420-1676706924796.jpeg",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1676703175962"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1676706924824"
+    }
+  },
+  "__v": 0,
+  "slug": "pandol-extra"
+}]
