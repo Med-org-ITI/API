@@ -11,7 +11,7 @@ const cloud = require('../utils/uploadImgCloudinary');
 
 const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
 
-exports.uploadUsreImage = uploadSingleImage('profileImage');
+exports.uploadUsreImage = uploadSingleImage('profileImg');
 
 // Image processing
 exports.resizeImage = asyncHandler(async (req, file, next) => {
