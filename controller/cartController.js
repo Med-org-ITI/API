@@ -2,13 +2,19 @@ const asyncHandler = require('express-async-handler');
 const Cart = require('../models/cartModel');
 
 exports.getCart = asyncHandler(async (req, res) => {
-	const cart = await Cart.findOne({ userId: req.user._id });
+	let cart = await Cart.findOne({ userId: req.user._id }).populate('items.itemId');
+	if (!cart) {
+		cart = await Cart.create({ userId: req.user._id });
+	}
 	res.status(200).json({ data: cart });
 });
 
 exports.addToCart = asyncHandler(async (req, res) => {
 	const { quantity, itemId, price } = req.body;
-	const cart = await Cart.findOne({ userId: req.user._id });
+	let cart = await Cart.findOne({ userId: req.user._id });
+	if (!cart) {
+		cart = await Cart.create({ userId: req.user._id });
+	}
 	cart.total += price * quantity;
 	const itemIndex = cart.items.findIndex(i => i.itemId === itemId);
 	if (itemIndex > -1) {

@@ -2,8 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const cartSchema = new Schema({
 	items: {
-		type: [{ itemId: Schema.Types.ObjectId, price: Number, quantity: Number }],
-		ref: 'Item',
+		type: [{ itemId: { type: Schema.Types.ObjectId, ref: 'Item' }, price: Number, quantity: Number }],
 		required: true,
 		default: [],
 	},
