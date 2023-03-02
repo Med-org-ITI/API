@@ -39,7 +39,6 @@ exports.userCompletedOrders = asyncHandler(async (req, res, next) => {
 
 exports.createOrder = asyncHandler(async (req, res) => {
   const cart = await Cart.findOne({ userId: req.user._id });
-  console.log(cart.total);
   const order = new Order({
     total: cart.total,
     items: cart.items,

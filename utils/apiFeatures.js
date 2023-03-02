@@ -28,7 +28,7 @@ class ApiFeatures {
   // 2) Paginastion
   pagination(countDocuments) {
     const page = this.queryStr.page * 1 || 1;
-    const limit = this.queryStr.limit * 1 || 12;
+    const limit = this.queryStr.limit * 1 || 8;
     const skip = (page - 1) * limit;
     const endIndex = page * limit;
 
@@ -92,6 +92,11 @@ class ApiFeatures {
     }
     return this;
   }
+
+  // 6) filterByUserId
+  // filterByUserId(){
+  //   if
+  // }
 }
 
 module.exports = ApiFeatures;

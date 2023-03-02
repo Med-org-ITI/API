@@ -40,6 +40,8 @@ exports.deleteOne = (Model) =>
 
 exports.getAll = (Model) =>
   asyncHandler(async (req, res) => {
+    console.log(req.body);
+    console.log(req.filterObj);
     let filter = {};
     if (req.filterObj) {
       filter = req.filterObj;
@@ -52,6 +54,7 @@ exports.getAll = (Model) =>
       .sort()
       .search()
       .limitFields();
+
     // Execute query
     const { mongooseQuery, paginationResult } = apiFeatures;
     const documents = await mongooseQuery;
