@@ -7,6 +7,6 @@ router.get('/', protect, allowedTo('admin', 'manager'), orderController.allOrder
 router.get('/:orderId', protect, allowedTo('admin', 'manager'), orderController.getOrder);
 router.get('/users/:id', protect, allowedTo('user'), orderController.userOrders);
 router.get('/users/:id/completedOrders', protect, orderController.userCompletedOrders);
-router.post('/', protect, allowedTo('user'), orderController.createOrder);
+router.get('/user/create', protect, allowedTo('user'), orderController.createOrder);
 
 module.exports = router;

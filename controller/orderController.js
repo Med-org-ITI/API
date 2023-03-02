@@ -40,5 +40,5 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 	cart.total = 0;
 	await cart.save();
 	await order.save();
-	res.status(422).json('cart must be filled');
+	res.status(203).json();
 });
