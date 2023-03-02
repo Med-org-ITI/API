@@ -8,6 +8,7 @@ exports.createOne = (Model) =>
     res.status(201).json({ data: document });
   });
 
+
 exports.getOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     const { id } = req.params;
@@ -17,6 +18,7 @@ exports.getOne = (Model) =>
     }
     res.status(200).json({ data: document });
   });
+
 
 exports.updateOne = (Model) =>
   asyncHandler(async (req, res, next) => {

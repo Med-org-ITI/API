@@ -31,11 +31,13 @@ const itemRoute = require('./itemRoute');
 
 router.use('/:userId/items', itemRoute);
 
+
 router.put(
   '/changePassword/:id',
   changeUserPasswordValidator,
   changeUserPassword
 );
+
 router.use(authService.protect);
 // router.use(itemRoute);
 
@@ -57,6 +59,7 @@ router.put(
 router.delete('/deleteMe', deleteLoggedUserData);
 
 router
+
   .route('/')
   .get(authService.allowedTo('admin', 'manager'), getUsers)
   .post(
@@ -67,9 +70,10 @@ router
     createUser
   );
 
+
 router
   .route('/:id')
-  .get(authService.allowedTo('admin'), getUserValidator, getUser)
+  .get(authService.allowedTo('admin,'user'), getUserValidator, getUser)
   .put(
     authService.allowedTo('admin'),
     uploadUsreImage,
