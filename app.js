@@ -15,6 +15,8 @@ const userRoute = require('./router/userRoute');
 const authRoute = require('./router/authRoute');
 const cartRoute = require('./router/cartRoute');
 const orderRoute = require('./router/orderRoute');
+const addressRoute = require('./router/addressRoute');
+const newsItemRoute = require('./router/newsItemRoute');
 // Connect with DB.
 dbconnection();
 
@@ -44,10 +46,10 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 // Middlewares
 
 if (process.env.NODE_ENV === 'development') {
-	app.use(morgan('dev'));
-	console.log(`mode: ${process.env.NODE_ENV}`);
+  app.use(morgan('dev'));
+  console.log(`mode: ${process.env.NODE_ENV}`);
 } else {
-	console.log(`mode: ${process.env.NODE_ENV}`);
+  console.log(`mode: ${process.env.NODE_ENV}`);
 }
 
 // Mount Routers
@@ -56,9 +58,11 @@ app.use('/items', itemRouter);
 app.use('/auth', authRoute);
 app.use('/cart', cartRoute);
 app.use('/orders', orderRoute);
+app.use('/addresses', addressRoute);
+app.use('/newsItem', newsItemRoute);
 
 app.all('*', (req, res, next) => {
-	next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
+  next(new ApiError(`Can't find this route: ${req.originalUrl}`, 404));
 });
 
 // Global error handling middleware for express
@@ -67,14 +71,14 @@ app.use(globalError);
 const port = process.env.PORT || 8000;
 
 const server = app.listen(port, () => {
-	console.log(`server is running on http://localhost:${port}`);
+  console.log(`server is running on http://localhost:${port}`);
 });
 
 // Handle rejection outside express
-process.on('unhandledRejection', err => {
-	console.error(`UnhandledRejection Errors: ${err.name} | ${err.message}}`);
-	server.close(() => {
-		console.log('Shutting down...');
-		process.exit(1);
-	});
+process.on('unhandledRejection', (err) => {
+  console.error(`UnhandledRejection Errors: ${err.name} | ${err.message}}`);
+  server.close(() => {
+    console.log('Shutting down...');
+    process.exit(1);
+  });
 });

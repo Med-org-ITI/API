@@ -37,7 +37,7 @@ router.put(
   changeUserPassword
 );
 router.use(authService.protect);
-router.use(itemRoute);
+// router.use(itemRoute);
 
 router.get('/getMe', getLoggedUserData, getUser);
 router.put(
