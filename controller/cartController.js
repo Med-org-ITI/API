@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Cart = require('../models/cartModel');
+const ApiError = require('../utils/apiError');
 
 exports.getCart = asyncHandler(async (req, res) => {
 	let cart = await Cart.findOne({ userId: req.user._id }).populate('items.itemId');
@@ -42,6 +43,21 @@ exports.removeFromCart = asyncHandler(async (req, res) => {
 	}
 	await cart.save();
 	res.status(200).json({ data: cart });
+});
+
+exports.removeCartItem = asyncHandler(async (req, res, next) => {
+	const { itemId, price, quantity } = req.body;
+	console.log(itemId);
+	const cart = await Cart.findOne({ userId: req.user._id });
+	const itemIndex = cart.items.findIndex(i => String(i.itemId) === String(itemId));
+	console.log(itemIndex);
+	if (!(itemIndex > -1)) {
+		return next(new ApiError('the item you are trying to remove, is not in the cart', 422));
+	}
+	cart.total -= quantity * price;
+	cart.items.splice(itemIndex, 1);
+	await cart.save();
+	res.status(203).json();
 });
 
 exports.clearCart = asyncHandler(async (req, res) => {
