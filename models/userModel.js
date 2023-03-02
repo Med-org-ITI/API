@@ -1,7 +1,7 @@
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 // 1- Create Schema
-const userSchema = new Mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -37,9 +37,16 @@ const userSchema = new Mongoose.Schema(
       enum: ['user', 'admin', 'manager'],
       default: 'user',
     },
-    address: {
-      type: String,
-    },
+    addresses: [
+      {
+        id: { type: mongoose.Schema.Types.ObjectId },
+        alias: String,
+        details: String,
+        phone: String,
+        city: String,
+        postalCode: String,
+      },
+    ],
     gender: {
       type: String,
     },
@@ -65,4 +72,4 @@ userSchema.pre('save', async function (next) {
 });
 
 // 2- Create Model
-module.exports = Mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', userSchema);
