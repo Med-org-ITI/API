@@ -52,15 +52,21 @@ DELETE--> '/items/:id' , to delete a product by its id , example '/products/1'
 <!-- Orders ENDPOINTS -->
 
 GET-> '/orders/ , to get all orders (admin only)
+
 GET-> '/orders/:id', to get a specific order by id (admin only)
+
 GET-> '/orders/users/:id', getting all user orders by user id
+
 GET-> '/orders/users/:id/completedOrders', to get all user completed orders
+
 GET-> '/orders'/user/create', to create an order
 
 ### Installation
 
+```
 -- npm install
 -- npm run start:dev
+```
 
 ## Built With
 
