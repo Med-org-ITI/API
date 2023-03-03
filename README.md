@@ -23,6 +23,7 @@ This API provides the ENDPOINTS and authentication for the angular medical proje
 THE SERVER IS USING PORT--> 8000
 
 <!-- USERS ENDPOINTS -->
+#### USER ENDPOINTS
 
 1. GET--> '/users/:userId/items' , getting user items
 
@@ -38,7 +39,7 @@ THE SERVER IS USING PORT--> 8000
 8. GET -> '/users/:id , get one user using the id
 
 <!-- ITEMS ENDPOINTS -->
-
+#### ITEMS ENDPOINTS
 1. GET--> '/items' , to get all products , with ability to pass some queries for search - filter - keywords
 
 2. POST --> '/items' , creating product route
@@ -50,6 +51,7 @@ THE SERVER IS USING PORT--> 8000
 5. DELETE--> '/items/:id' , to delete a product by its id , example '/products/1'
 
 <!-- Orders ENDPOINTS -->
+#### ORDERS ENDPOINTS
 
 1. GET-> '/orders/ , to get all orders (admin only)
 
