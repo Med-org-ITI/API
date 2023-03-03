@@ -32,24 +32,26 @@ const itemRoute = require('./itemRoute');
 router.use('/:userId/items', itemRoute);
 
 router.put('/changePassword/:id', changeUserPasswordValidator, changeUserPassword);
-// router.use(itemRoute);
+
 router.use(authService.protect);
+// router.use(itemRoute);
 
 router.get('/getMe', getLoggedUserData, getUser);
-router.put('/changeMyPassword', updateLoggedUserPasswordValidator, updateLoggedUserPassword);
+router.put('/changeMyPassword', authService.protect, updateLoggedUserPasswordValidator, updateLoggedUserPassword);
+
 router.put('/updateMe', uploadUsreImage, resizeImage, updateLoggedUserDataValidator, updateLoggedUserData);
 router.delete('/deleteMe', deleteLoggedUserData);
 
-router.route('/').get(authService.allowedTo('admin', 'manager'), getUsers);
-
 router
-	.use(authService.allowedTo('admin', 'manager', 'user'))
 
-	.post(uploadUsreImage, resizeImage, createUserValidator, createUser);
+	.route('/')
+	.get(authService.allowedTo('admin', 'manager'), getUsers)
+	.post(authService.allowedTo('admin'), uploadUsreImage, resizeImage, createUserValidator, createUser);
+
 router
 	.route('/:id')
-	.get(getUserValidator, getUser)
-	.put(uploadUsreImage, resizeImage, updateUserValidator, updateUser)
-	.delete(deleteUserValidator, deleteUser);
+	.get(authService.allowedTo('admin', 'user'), getUserValidator, getUser)
+	.put(authService.allowedTo('admin'), uploadUsreImage, resizeImage, updateUserValidator, updateUser)
+	.delete(authService.allowedTo('admin'), deleteUserValidator, deleteUser);
 
 module.exports = router;
