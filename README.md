@@ -61,16 +61,13 @@ cat storage/jwtRS256.key.pub | base64 # edit JWT_ACCESS_TOKEN_SECRET_PUBLIC in .
 Running in development:
 
 ```bash
-npm start
-# or
-npm run dev
+npm run start:dev
 ```
 
 Running in production:
 
 ```bash
-# start
-npm run prod
+npm run start:prod
 ```
 
 ## Environment Variables
@@ -83,10 +80,10 @@ NODE_ENV=development
 NODE_ENV=production
 
 # Port
-PORT = 3000
+PORT = 8000
 
 # Host
-BASE_URL = localhost:3000
+BASE_URL = localhost:8000
 
 # Mongo DB
 db_user = your user name of atlas db 
@@ -112,57 +109,56 @@ EMAIL_PASSWORD =
 ## Project Structure
 
  ```
-├── E-COMMERCE-CHARITY
-│   ├── server.js
+├── E-COMMERCE-MEDICAL
+│   ├── app.js
 │   ├── package.json
 │   ├── package-lock.json
-|   ├── config.env
+|   ├── .env
 │   ├── config
 │   │   ├── database.js
 │   ├── models
 │   │   ├── userModel.js
-│   │   ├── productModel.js
-│   │   ├── categoryModel.js
-│   │   ├── brandModel.js
+│   │   ├── itemModel.js
+│   │   ├── newsItemModel.js
 │   │   ├── cartModel.js
 │   │   └── orderModel.js
 │   ├── middlewares
-│   │   ├── auth.js
-│   │   ├── error.js
-│   │   ├── uploadImage.js
-│   │   └── validator.js
+│   │   ├── errorMiddleware.js
+│   │   ├── uploadImageMiddleware.js
+│   │   └── validatorMiddleware.js
 │   ├── utils
 │   │   ├── validators
 │   │   │   ├── userValidator.js
+│   │   │   ├── adminValidator.js
 │   │   │   ├── authValidator.js
-│   │   │   ├── productValidator.js
-│   │   │   ├── categoryValidator.js
-│   │   │   └── brandValidator.js
+│   │   │   ├── itemValidator.js
+│   │   │   ├── cartValidator.js
+│   │   │   └── orderValidator.js
 │   │   ├── ApiError.js
 │   │   ├── apiFeatures.js
 │   │   ├── sendEmail.js
+|   |   ├── generateToken.js
+|   |   ├── uploadImgCloudinary.js
 │   ├── controllers
 │   │   ├── handleFactory.js
 │   │   ├── userController.js
 │   │   ├── auth.js
-│   │   ├── productService.js
-│   │   ├── categoryService.js
-│   │   ├── brandService.js
-│   │   ├── cartService.js
-│   │   └── orderService.js
-│   ├── routes
-│   │   ├── auth.js
+│   │   ├── itemController.js
+│   │   ├── newItemController.js
+│   │   ├── addressController.js
+│   │   ├── cartController.js
+│   │   └── orderController.js
+│   ├── router
+│   │   ├── authRoute.js
 │   │   ├── userRoute.js
-│   │   ├── productRoute.js
-│   │   ├── categoryRoute.js
-│   │   ├── brandRoute.js
+│   │   ├── itemRoute.js
+│   │   ├── newsItemRoute.js
+│   │   ├── addressRoute.js
 │   │   ├── cartRoute.js
 │   │   └── orderRoute.js
 │   ├── uploads
-│   │   ├── brands
-│   │   ├── users
-│   │   ├── categories
-│   │   └── products
+│   │   ├── profile
+│   │   ├── items
 └──  .gitignore
  ```
  
