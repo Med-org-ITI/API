@@ -163,7 +163,7 @@ EMAIL_PASSWORD =
  ```
  
 
-### API Endpoints on postman :
+## API Endpoints on postman :
 
 - [User_Api](https://documenter.getpostman.com/view/25405822/2s93JnUS7q) 
 - [Authentication_API](https://documenter.getpostman.com/view/25405822/2s93JnUS7j)
