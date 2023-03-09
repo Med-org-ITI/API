@@ -165,7 +165,7 @@ EMAIL_PASSWORD =
 
 ## API Endpoints
 
-- [API_ENDPOINTS](https://documenter.getpostman.com/view/25408892/2s93Jrvj98#9768dbee-b335-4313-bb03-14e2c21a9468)
+- [Dawini Application => EndPoints](https://documenter.getpostman.com/view/25408892/2s93Jrvj98#9768dbee-b335-4313-bb03-14e2c21a9468)
 
 
 List of available routes:
