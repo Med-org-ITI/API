@@ -165,13 +165,7 @@ EMAIL_PASSWORD =
 
 ## API Endpoints on postman :
 
-- [User_Api](https://documenter.getpostman.com/view/25405822/2s93JnUS7q) 
-- [Authentication_API](https://documenter.getpostman.com/view/25405822/2s93JnUS7j)
-- [Product_API](https://documenter.getpostman.com/view/25405822/2s93JnUS7o)
-- [Brand_API](https://documenter.getpostman.com/view/25405822/2s93JnUS7n)
-- [Category_API](https://documenter.getpostman.com/view/25405822/2s93JnUSC7)
-- [Cart_API](https://documenter.getpostman.com/view/25449871/2s93JnUSC8)
-- [Order_API](https://documenter.getpostman.com/view/25450774/2s93JnUSC9)
+- [API_ENDPOINTS](https://documenter.getpostman.com/view/25408892/2s93Jrvj98#9768dbee-b335-4313-bb03-14e2c21a9468)
 
 
 List of available routes:
