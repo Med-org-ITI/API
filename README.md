@@ -219,5 +219,5 @@ List of available routes:
 
 ## License
 ```
-   Copyright (C) 2023 M,F,R,M,M Team ❤️
+   Copyright (C) 2023 M,F,R,B,M Team ❤️
 ```
